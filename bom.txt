@@ -1,0 +1,19 @@
+ESP-07
+OLED    	 0.96" I2C
+DHT-22
+3V3R        MCP1824ST-3302E/DB (6V 300mA 0.3Vdo)
+            TC1262-3.3VDBTR (6V 500mA 0.3Vdo)
+            MCP1755T-3302E/DC (16V 300mA 0.5Vdo)
+            MIC2920A-3.3WS TR (26V 400mA 0.75Vdo) Change C1 to 10uF.
+
+Q1,Q2       SOT-23 General purpose PNP or P-Channel FET
+R1-R4       10K 0805
+R5	        1K 0805
+R6          4K7 0805
+R7	        330 0805
+LED1	      0805
+C1,C2,C3    1uF 0805
+CDS         4mm pitch
+FLASH,RESET 4x2mm butttons
+PWR,SER     2-pin 0.1" header
+Top buttons 4x4mm
