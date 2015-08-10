@@ -17,6 +17,7 @@ IO16 option: deepSleep, raw I/O or button.
 iot.php - simple script for saving data from a device.  
 Create a directoy named "iot" in the same directory as iot.php  
 A POST to this will create an XML formatted file using 'name' as the filename.xml  
-All fields will be written as XML: <field>value<\field> overwriting the older file.  
-A GET /iot.php?name=file will return the data in the file.
-  
+All fields will be written as XML values overwriting the older file, and appended to filename.txt as JS array data.  
+A GET /iot.php?name=file will return the data in the xml file.
+
+chart.php?name=filename will draw a chart.  This one is designed for data, temp, rh, volts.
