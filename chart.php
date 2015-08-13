@@ -30,11 +30,19 @@ $(document).ready(function() {
 	graph = $('#graph');
 	var c = graph[0].getContext('2d');
 
+	var tipCanvas = document.getElementById("tip");
+    var tipCtx = tipCanvas.getContext("2d");
+	var tipDiv = document.getElementById("popup");
+
+    var canvasOffset = graph.offset();
+    var offsetX = canvasOffset.left;
+    var offsetY = canvasOffset.top;
+
 	c.lineWidth = 2;
 	c.strokeStyle = '#333';
 	c.font = 'italic 8pt sans-serif';
 	c.textAlign = "left";
-	
+
 	c.beginPath(); // borders
 	c.moveTo(xPadding, 0);
 	c.lineTo(xPadding, graph.height() - yPadding);
@@ -42,8 +50,11 @@ $(document).ready(function() {
 	c.lineTo(graph.width() - 40, 0);
 	c.stroke();
 
+	c.lineWidth = 1;
 	// dates
-	for(var i = 0; i < data.values.length; i ++) {
+	step = Math.floor(data.values.length / 15)
+	if(step == 0) step = 1
+	for(var i = 0; i < data.values.length; i += step) {
 		if( data.values[i].temp != 'nan')
 		{
 			c.save()
@@ -136,6 +147,66 @@ $(document).ready(function() {
 		    c.arc(getXPixel(i), getVPixel(data.values[i].volts), 3, 0, Math.PI * 2, true);
 	    c.fill();
 	}
+	
+	var dots = [];
+    for(var i = 0; i < data.values.length; i ++) {
+        dots.push({
+            x: getXPixel(i),
+            y: getYPixel(data.values[i].temp),
+            r: 4,
+            rXr: 16,
+            color: "red",
+            tip: data.values[i].temp,
+            tip2: data.values[i].rh,
+            tip3: data.values[i].date
+        });
+    }
+
+
+ // request mousemove events
+    graph.mousemove(function(e){handleMouseMove(e);});
+
+    // show tooltip when mouse hovers over dot
+    function handleMouseMove(e){
+      mouseX=parseInt(e.clientX-offsetX);
+      mouseY=parseInt(e.clientY-offsetY);
+
+      // Put your mousemove stuff here
+      var hit = false;
+      for (var i = 0; i < dots.length; i++) {
+          var dot = dots[i];
+          var dx = mouseX - dot.x;
+          var dy = mouseY - dot.y;
+          if (dx * dx + dy * dy < dot.rXr) {
+			tipCtx.fillStyle = "#C0C0C0";
+			tipCtx.fillRect(0, 0, tipCanvas.width, tipCanvas.height);
+
+			tipCtx.lineWidth = 2;
+			tipCtx.fillStyle = "#000000";
+			tipCtx.strokeStyle = '#333';
+			tipCtx.font = 'italic 8pt sans-serif';
+			tipCtx.textAlign = "left";
+		
+			tipCtx.beginPath(); // borders
+			tipCtx.moveTo(0, 0);
+			tipCtx.lineTo(0, 60);
+			tipCtx.lineTo(90, 60);
+			tipCtx.lineTo(90, 0);
+			tipCtx.lineTo(0, 0);
+			tipCtx.stroke();
+
+			tipCtx.fillText( dot.tip + '°F', 5, 15);
+			tipCtx.fillText( dot.tip2 + '%', 5, 29);
+			tipCtx.fillText( dot.tip3.slice(0, 10), 5, 43);
+			tipCtx.fillText( dot.tip3.slice(11, 25), 5, 57);
+			hit = true;
+			popup = document.getElementById("popup");
+			popup.style.top = dot.y + "px";
+			popup.style.left = (dot.x-90) + "px";
+          }
+      }
+      if (!hit) { popup.style.left = "-200px"; }
+    }
 });
 
 function getMaxY() {
@@ -190,28 +261,35 @@ function isoDateToJsDate(value)
 	}
 	return value
 }
-        </script>
-    	<style type="text/css">
-.style1 {
-	color: #FF0000;
+
+</script>
+<style type="text/css">
+#wrapper {
+  width: 800px;
+  height: 280px;
+  position: relative;
 }
-.style2 {
-	color: #0000FF;
+#graph {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
-.style3 {
-	color: #00FF00;
-}
-.style4 {
-	color: #00FFFF;
+#popup {
+  width: 90;
+  height: 60;
+  position: absolute;
+  top: 150px;
+  left: 150px;
+  z-index: 10;
 }
 </style>
     </head>
     <body>
-    	<h1>IOT Chart</h1>
-		<span class="style1">Temperature</span> <span class="style2">&nbsp;Humidity</span>
-		<span class="style3">&nbsp;</span><span class="style4">Volts</span><br>
-    	<br>
-        <canvas id="graph" width="800" height="280">   
-        </canvas> 
+	<div id="wrapper">
+    <canvas id="graph" width="800" height="280"></canvas>
+    <div id="popup" width="90" height="60"><canvas id="tip" width="90" height="60"></canvas></div>
+    </div>
     </body>
 </html>
