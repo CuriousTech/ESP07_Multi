@@ -22,5 +22,5 @@ A GET /iot.php?name=file will return the data in the xml file.
 
 chart.php?name=filename will draw a chart.  This one is designed for data, temp, rh, volts.
 
-setip.php?name=filename will create iot/filename.php as a redirector to your device.
+setip.php?name=filename will create iot/filename.php as a redirector to your device.  
 fwdip.php?name=myDevice will create server/iot/myDevice.php with script to forward all GET data.
