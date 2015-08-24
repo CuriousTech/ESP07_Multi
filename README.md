@@ -11,7 +11,7 @@ IO13 option: LED or PNP (or both)
 IO14 only raw I/O pad  
 IO16 option: deepSleep, raw I/O or button.  
 
-![Actualy Device](http://www.curioustech.net/images/espmulti.png)  
+![Actual Device](http://www.curioustech.net/images/espmulti.png)  
 
 
 iot.php - simple script for saving data from a device.  
@@ -21,3 +21,6 @@ All fields will be written as XML values overwriting the older file, and appende
 A GET /iot.php?name=file will return the data in the xml file.
 
 chart.php?name=filename will draw a chart.  This one is designed for data, temp, rh, volts.
+
+setip.php?name=filename will create iot/filename.php as a redirector to your device.
+fwdip.php?name=myDevice will create server/iot/myDevice.php with script to forward all GET data.
