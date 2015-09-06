@@ -7,9 +7,12 @@
 		$ip = $_SERVER['REMOTE_ADDR'];
 	}
 
+	echo $ip;
+
 	if( $_SERVER['REQUEST_METHOD'] == 'GET'){
 		$file_name = 'iot/' . $_GET['name'] . '.php';
 		$file = fopen($file_name, 'w+');
+		if(array_key_exists('port', $_GET)) $ip = $ip.':'.$_GET['port'];
 		$sr = '$s=\'\';if( $_SERVER[\'REQUEST_METHOD\'] == \'GET\'){$arr=new ArrayObject($_GET);$i=0;while($p=current($arr)){if($i==0) $s=\'?\';else $s=$s.\'&\';$s=$s.key($arr).\'=\'.$p;next($arr);$i++;}}';
 		fwrite($file, "<?php\n" . $sr . "\nheader(\"Location: http://" . $ip . '/".$s);' . "\nexit;\n?>");
 		fclose($file);
