@@ -20,6 +20,6 @@ A POST to this will create an XML formatted file using 'name' as the filename.xm
 All fields will be written as XML values overwriting the older file, and appended to filename.txt as JS array data.  
 A GET /iot.php?name=file will return the data in the xml file.
 
-chart.php?name=filename will draw a chart.  This one is designed for data, temp, rh, volts.
+chart.php?name=filename will draw a chart.  This one is designed for date, temp, rh, volts.
 
 fwdip.php?name=myDevice&port=number will create server/iot/myDevice.php with script to forward all GET data to IP of device that created it.  The IP is also returned when created.  
