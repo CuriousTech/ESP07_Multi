@@ -7,9 +7,12 @@
 		$ip = $_SERVER['REMOTE_ADDR'];
 	}
 
-	echo $ip;
+	echo "Start\n";
+	echo "IP: " . $ip . "\n";
+	$date = new DateTime();
+	echo "Time: " . $date->format('Y-m-d H:i:s') . "\n";
 
-	if( $_SERVER['REQUEST_METHOD'] == 'GET'){
+	if( $_SERVER['REQUEST_METHOD'] == 'GET' && array_key_exists('name', $_GET) ){
 		$file_name = 'iot/' . $_GET['name'] . '.php';
 		$file = fopen($file_name, 'w+');
 		if(array_key_exists('port', $_GET)) $ip = $ip.':'.$_GET['port'];
