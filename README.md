@@ -22,4 +22,4 @@ A GET /iot.php?name=file will return the data in the xml file.
 
 chart.php?name=filename will draw a chart.  This one is designed for date, temp, rh, volts.
 
-fwdip.php?name=myDevice&port=number will create server/iot/myDevice.php with script to forward all GET data to IP of device that created it.  The IP is also returned when created.  
+fwdip.php?name=myDevice&port=number will create server/iot/myDevice.php with script to forward all GET data to IP of device that created it.  The global IP and current date/time are also returned to the creator.  
