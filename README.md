@@ -9,7 +9,7 @@ IO0 could have been used for something (well, next time)
 IO12 option: button or PNP sink  
 IO13 option: LED or PNP (or both)  
 IO14 only raw I/O pad  
-IO16 option: deepSleep, raw I/O or button.  
+IO16 option: deepSleep, raw I/O or button.  (Note: IO16 has no internal pullup for button)
 
 ![Actual Device](http://www.curioustech.net/images/espmulti.png)  
 
